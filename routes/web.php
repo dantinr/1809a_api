@@ -14,3 +14,12 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+
+$router->post('/test/sec', 'Test\TestController@testSec');
+$router->post('/test/rsa', 'Test\TestController@testRsa');      //非对称加密
+
+$router->post('/test/sign', 'Test\TestController@testSign');      //非对称加密
+
+$router->get('/test/cors', 'Test\TestController@testCors');
+$router->get('/test/redis', 'Test\TestController@redisTest');
