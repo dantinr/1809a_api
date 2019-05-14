@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Test;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redis;
+
+
 class TestController extends Controller
 {
 
@@ -70,5 +73,6 @@ class TestController extends Controller
         $v = 'aaaaa';
 
         Redis::set($k,$v);
+        echo Redis::get($k);
     }
 }
