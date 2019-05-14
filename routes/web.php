@@ -23,3 +23,7 @@ $router->post('/test/sign', 'Test\TestController@testSign');      //非对称加
 
 $router->get('/test/cors', 'Test\TestController@testCors');
 $router->get('/test/redis', 'Test\TestController@redisTest');
+
+
+//用户接口
+$router->post('/user/reg', 'User\UserController@reg');       //注册
