@@ -34,7 +34,7 @@ class UserController extends Controller
         $c = $request->input('c');      // 客户端标识 1 Android 2 Iphone 3 IPAD
 
         //验证用户
-        $url = "http://'.env('HOST_PASSPORT').'/api/user/login?u=$e&p=$p&c=$c";         // passport 验证登录接口
+        $url = "http://".env('HOST_PASSPORT')."/api/user/login?u=$e&p=$p&c=$c";         // passport 验证登录接口
         return $this->curlGet($url);
     }
 
@@ -51,7 +51,7 @@ class UserController extends Controller
         return $response;
     }
 
-    
+
     /**
      * curl 请求
      */
