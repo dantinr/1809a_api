@@ -75,4 +75,9 @@ class TestController extends Controller
         Redis::set($k,$v);
         echo Redis::get($k);
     }
+
+    public function q()
+    {
+        return response('xixi',200);
+    }
 }

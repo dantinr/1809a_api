@@ -23,7 +23,11 @@ $router->post('/test/sign', 'Test\TestController@testSign');      //非对称加
 
 $router->get('/test/cors', 'Test\TestController@testCors');
 $router->get('/test/redis', 'Test\TestController@redisTest');
+$router->get('/test/q', 'Test\TestController@q');
 
 
 //用户接口
 $router->post('/user/reg', 'User\UserController@reg');       //注册
+$router->post('/user/login', 'User\UserController@login');       //登录
+$router->get('/user/center', 'User\UserController@center');       //个人中心
+
