@@ -18,12 +18,8 @@ class UserController extends Controller
      */
     public function reg()
     {
-        $response = [
-            'errno' => 0,
-            'msg'   => '注册成功',
-            'data'  => []
-        ];
-
+        $url = 'http://'.env('HOST_PASSPORT').'/api/user/reg';
+        $response = $this->curlPost($url,$_POST);
         return $response;
     }
 
@@ -33,23 +29,13 @@ class UserController extends Controller
      */
     public function login(Request $request)
     {
-        $e = $request->input('e');
+        $e = $request->input('u');
         $p = $request->input('p');
+        $c = $request->input('c');      // 客户端标识 1 Android 2 Iphone 3 IPAD
 
-        $u = UserModel::where(['email'=>$e])->first();
-        //TODO 验证密码
-
-
-        $response = [
-            'errno' => 0,
-            'msg'   => 'ok',
-            'data'  => [
-                'token' => 'abcdef'
-            ]
-        ];
-
-        return $response;
-
+        //验证用户
+        $url = "http://'.env('HOST_PASSPORT').'/api/user/login?u=$e&p=$p&c=$c";         // passport 验证登录接口
+        return $this->curlGet($url);
     }
 
     /**
@@ -57,7 +43,67 @@ class UserController extends Controller
      */
     public function center()
     {
-        $uid = $_GET['uid'];
-        $u = UserModel::where(['uid'=>$uid])->first();
+        $response = [
+            'errno' => 0,
+            'msg'   => 'ucenter'
+        ];
+
+        return $response;
     }
+
+    
+    /**
+     * curl 请求
+     */
+    public function curlGet($url)
+    {
+        $ch = curl_init();
+
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+
+        $response = curl_exec($ch);
+        $errno = curl_errno($ch);
+        if($errno){
+            $response = [
+                'errno' => 50001,
+                'msg'   => 'curl err : '.$errno
+            ];
+        }
+
+        curl_close($ch);
+
+        return $response;
+
+    }
+
+
+    /**
+     * curl POST请求
+     * @param $url
+     * @param $param
+     * @return array|bool|string
+     */
+    public function curlPost($url,$param)
+    {
+        $ch = curl_init();
+
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch,CURLOPT_POST,1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$param);
+
+        $response = curl_exec($ch);
+        $errno = curl_errno($ch);
+        if($errno){
+            $response = [
+                'errno' => 50001,
+                'msg'   => 'curl err : '.$errno
+            ];
+        }
+        curl_close($ch);
+        return $response;
+
+    }
+
 }
